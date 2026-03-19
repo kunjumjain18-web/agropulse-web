@@ -317,4 +317,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-up').forEach(el => fxObserver.observe(el));
 
+    // ------------------------------------- //
+    // Interactive Fertilize Plant           //
+    // ------------------------------------- //
+    const startFertBtn = document.getElementById('startFertilizeBtn');
+    const fertPlant = document.getElementById('fertPlant');
+    const waterDrops = document.getElementById('waterDrops');
+
+    if (startFertBtn && fertPlant && waterDrops) {
+        startFertBtn.addEventListener('click', () => {
+            waterDrops.classList.remove('hidden', 'watering');
+            
+            // Force reflow to restart animation instantly if mashed multiple times
+            void waterDrops.offsetWidth; 
+            
+            waterDrops.classList.add('watering');
+            
+            setTimeout(() => {
+                fertPlant.classList.remove('plant-grow-bounce');
+                void fertPlant.offsetWidth;
+                fertPlant.classList.add('plant-grow-bounce');
+                
+                setTimeout(() => {
+                    waterDrops.classList.add('hidden');
+                    fertPlant.classList.remove('plant-grow-bounce');
+                }, 1500);
+            }, 800);
+        });
+    }
+
 });

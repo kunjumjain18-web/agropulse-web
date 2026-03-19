@@ -1037,9 +1037,10 @@ canvas#sensorCanvas {
 .ai-label {
     font-size: 0.9rem;
     letter-spacing: 2px;
-    color: #ff6a00;
-    font-weight: 600;
+    color: #ffaa77;
+    font-weight: 800;
     text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 106, 0, 0.8), 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .gradient-text {
@@ -1053,8 +1054,53 @@ canvas#sensorCanvas {
 
 .subtitle {
     font-size: 1.2rem;
-    color: rgba(255,255,255,0.8);
+    color: #ffffff;
     margin-bottom: 20px;
+    font-weight: 500;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.6);
+}
+
+/* Interactive Plant */
+.interactive-plant-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    z-index: 5;
+}
+.the-plant {
+    font-size: 100px; /* Massive size */
+    transition: transform 0.3s ease;
+    transform-origin: bottom center;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(163,230,53,0.4));
+}
+.water-drops {
+    font-size: 40px;
+    position: absolute;
+    top: -40px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+.water-drops.watering {
+    animation: rainDrop 1s ease-in forwards;
+}
+.the-plant.plant-grow-bounce {
+    animation: plantHealthBounce 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes rainDrop {
+    0% { opacity: 0; transform: translateY(-30px); }
+    30% { opacity: 1; transform: translateY(0px); }
+    80% { opacity: 1; transform: translateY(25px); }
+    100% { opacity: 0; transform: translateY(35px); }
+}
+@keyframes plantHealthBounce {
+    0% { transform: scale(1); filter: brightness(1) drop-shadow(0 10px 15px rgba(0,0,0,0.8)); }
+    50% { transform: scale(1.2) translateY(-10px); filter: brightness(1.2) drop-shadow(0 0 30px rgba(163,230,53,0.8)); }
+    100% { transform: scale(1); filter: brightness(1) drop-shadow(0 10px 15px rgba(0,0,0,0.8)); }
 }
 
 .btn-action {
@@ -1096,10 +1142,10 @@ canvas#sensorCanvas {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 20px;
-    padding: 30px;
+    padding: 20px; /* Reduced space */
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px; /* Reduced space */
 }
 
 .card-header {
@@ -1304,7 +1350,11 @@ canvas#sensorCanvas {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
-    background: rgba(255,255,255,0.02);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     padding: 20px;
     border-radius: 15px;
 }
@@ -1371,6 +1421,9 @@ canvas#sensorCanvas {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
+    background: rgba(0, 0, 0, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 .detail-row {
     display: flex;
@@ -1398,11 +1451,18 @@ canvas#sensorCanvas {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: transform 0.3s ease;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 .history-item:hover {
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.08); 
+    background: rgba(0, 0, 0, 0.45);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 .history-time {
     color: rgba(255, 255, 255, 0.5);
