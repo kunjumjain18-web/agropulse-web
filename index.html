@@ -14,6 +14,16 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            overflow: hidden !important;
+        }
+        .section {
+            height: 100vh !important;
+            overflow-y: auto !important;
+            padding-bottom: 80px; /* Extra padding to ensure content isn't cut off by screen edge */
+        }
+    </style>
 </head>
 
 <body>
@@ -31,13 +41,17 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 12H3"/><path d="M12 3v18"/></svg>
                 <span>Insights</span>
             </a>
+            <a href="#recommended" class="nav-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span>Recommended</span>
+            </a>
             <a href="#crops" class="nav-link">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
                 <span>Crops</span>
             </a>
-            <a href="#fertilize" class="nav-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
-                <span>Fertilize</span>
+            <a href="#sell" class="nav-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span>Sell</span>
             </a>
         </div>
     </nav>
@@ -55,9 +69,9 @@
         </div>
 
         <!-- Hero Content -->
-        <div class="hero-content">
+        <div class="hero-content" style="margin-top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center;">
             <div class="title-and-line">
-                <h1 class="main-heading">
+                <h1 class="main-heading" style="margin-top: 0;">
                     <span class="hindi-text">एग्रो</span>
                     <span class="english-text">Pulse</span>
                 </h1>
@@ -68,8 +82,13 @@
                         preserveAspectRatio="none">
                         <path d="M10 30 H250 L260 40 L270 15 L285 50 L300 5 L315 40 L325 30 H590" stroke="#A3E635"
                             stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
                 </div>
             </div>
+        </div>
+        
+        <div style="position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); z-index: 10;">
+            <button id="btnStartGrowing" class="btn-primary" style="padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; font-weight: bold; transition: transform 0.3s ease; box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Start Growing</button>
         </div>
     </section>
 
@@ -83,6 +102,80 @@
         <section id="insights" class="sensor-section section">
             
             <div class="content">
+            
+            <!-- FIELD SETUP FLOW -->
+            <div id="fieldSetupFlow" class="readings-section" style="max-width: 600px; margin: 0 auto 40px auto; transition: opacity 0.4s ease;">
+                
+                <!-- Step 1: Header Box -->
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 class="section-heading" style="margin-bottom: 5px;">Field Setup & Data Collection</h3>
+                    <p class="subtitle" style="font-size: 1rem; color: rgba(255, 255, 255, 0.8); text-shadow: none;">Provide your field details to generate accurate insights</p>
+                </div>
+
+                <!-- Step 2: Field Information Box -->
+                <div class="sensor-card glass-panel" style="padding: 25px; margin-bottom: 25px;">
+                    <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 20px;">Information about your field</h4>
+                    
+                    <!-- Image Upload -->
+                    <div style="margin-bottom: 25px;">
+                        <label class="date-label" style="display: block; margin-bottom: 10px;">Add images of your field (all sides)</label>
+                        <div id="imageUploadArea" style="border: 2px dashed rgba(163, 230, 53, 0.4); border-radius: 15px; padding: 30px; text-align: center; background: rgba(255,255,255,0.05); cursor: pointer; transition: all 0.3s ease;">
+                            <span style="font-size: 2rem; margin-bottom: 10px; display: block;">📸</span>
+                            <span style="color: #A3E635; font-size: 1rem; font-weight: 500;">Tap to upload photos</span>
+                        </div>
+                        <!-- Hidden File Input -->
+                        <input type="file" id="fieldImageInput" accept="image/*" multiple style="display: none;">
+                        
+                        <!-- Thumbnails Container -->
+                        <div id="imageThumbnails" style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto;"></div>
+                    </div>
+
+                    <!-- Field Size -->
+                    <div>
+                        <label class="date-label" style="display: block; margin-bottom: 10px;">Enter size of your field</label>
+                        <div class="date-wrapper" style="margin-bottom: 8px;">
+                            <input type="number" id="fieldSizeInput" class="date-input" placeholder="e.g. 5" style="padding-right: 70px;">
+                            <span style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); font-weight: 500;">Acres</span>
+                        </div>
+                        <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 0 0 10px 0;">Recommended to enter size in acres</p>
+                        
+                        <div style="background: rgba(46, 204, 113, 0.1); border-left: 3px solid #2ECC71; padding: 10px 15px; border-radius: 0 8px 8px 0; margin-top: 15px;">
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; margin: 0 0 5px 0;">Not sure how to convert to acres?</p>
+                            <p style="color: #A3E635; font-size: 0.85rem; margin: 0; font-weight: 500;">1 acre = 43,560 sq ft</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Connect Device Box -->
+                <div class="sensor-card glass-panel" style="padding: 25px; margin-bottom: 25px; text-align: center;">
+                    <button id="btnConnectDevice" class="btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">Connect your device</button>
+                    <p id="imageUploadError" style="color: #ff4b2b; font-size: 0.95rem; display: none; margin-top: 10px; font-weight: 500;">Please upload 4 field images and enter field size.</p>
+                    <p id="connectionStatusText" style="color: #A3E635; font-size: 1rem; margin: 15px 0 0 0; display: none; font-weight: 500;"></p>
+                </div>
+
+                <!-- Step 4: Field Mapping Box (Hidden initially) -->
+                <div id="fieldMappingBox" class="sensor-card glass-panel" style="padding: 25px; display: none;">
+                    <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 20px; text-align: center;">Place your device across the field</h4>
+                    
+                    <!-- Simulated Map Container -->
+                    <div id="simulatedMapArea" style="background: linear-gradient(135deg, rgba(163, 230, 53, 0.15), rgba(46, 204, 113, 0.05)); position: relative; border-radius: 15px; height: 280px; margin-bottom: 20px; overflow: hidden; box-shadow: inset 0 0 40px rgba(0,0,0,0.6); border: 2px solid rgba(163, 230, 53, 0.4); transition: transform 0.5s ease;">
+                        <!-- Soft Inner Glow -->
+                        <div style="position: absolute; inset: 0; box-shadow: inset 0 0 60px rgba(163, 230, 53, 0.1); pointer-events: none;"></div>
+                        <!-- Subtle Grid Overlay -->
+                        <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none;"></div>
+                        <!-- Points generated via JS -->
+                    </div>
+
+                    <div style="text-align: center;">
+                        <p id="analysisFeedbackText" style="color: #A3E635; font-size: 1.1rem; font-weight: 500; margin: 0 0 15px 0; text-shadow: 0 0 10px rgba(163,230,53,0.3);"></p>
+                        <button id="btnScrollToStats" class="btn-export" style="padding: 10px 25px; border-radius: 50px; border-color: rgba(163, 230, 53, 0.6); color: #A3E635; display: none; margin: 0 auto;">Move Forward ↓</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Existing Statistical Data -->
+            <div id="statisticalDataSection" style="padding-top: 20px; transition: opacity 0.5s ease;">
+                
             <!-- Rising Water Overlay for Crying State -->
             <div id="waterOverlay" class="water-overlay"></div>
 
@@ -139,7 +232,7 @@
             </div>
 
             <!-- Live Readings Section -->
-            <div class="readings-section">
+            <div class="readings-section hidden">
                 <h3 class="section-heading">What your sensors say</h3>
                 
                 <div class="sensor-grid">
@@ -194,7 +287,7 @@
             </div>
 
             <!-- Graph Section -->
-            <div class="graph-section glass-panel">
+            <div class="graph-section glass-panel hidden">
                 <div class="graph-header">
                     <h4>Sensor Trends</h4>
                     <div class="filter-buttons">
@@ -224,9 +317,101 @@
                         <span class="legend-text">Temp °C</span>
                     </div>
                 </div>
+
+                <!-- Section Entry Flow Button -->
+                <div style="display: flex; justify-content: center; margin-top: 35px;">
+                    <button id="btnMoveFurther" class="btn-primary" style="padding: 12px 30px;">Move Further</button>
+                </div>
             </div>
-        </div>
-    </section>
+            </div>
+            </div> <!-- End statisticalDataSection -->
+            </div>
+        </section>
+
+        <!-- Recommended Crops Section -->
+        <section id="recommended" class="sensor-section section" style="padding-top: 150px;">
+            <div class="content">
+            <div class="sensor-content">
+            <div class="readings-section" id="recommended-crops-module">
+                <h3 class="section-heading" style="margin-bottom: 5px;">Recommended crops for your field</h3>
+                <p class="subtitle" style="font-size: 1rem; color: rgba(255, 255, 255, 0.8); text-shadow: none;">Based on your field data, these crops require less input and can deliver higher yield.</p>
+                
+                <div class="form-wrapper" style="margin-top: 25px; max-width: 400px; margin-left: 0;">
+                    <div class="date-field">
+                        <label class="date-label">Number of crops you want to grow</label>
+                        <input type="number" id="cropCountInput" class="date-input" min="1" max="10" placeholder="e.g. 4">
+                    </div>
+                </div>
+
+                <!-- Dynamic Suggestions Container -->
+                <div id="cropSuggestionsContainer" class="sensor-grid" style="margin-top: 30px; display: none;">
+                    <!-- Filled dynamically by script.js -->
+                </div>
+
+                <!-- Custom Input Option -->
+                <div id="customCropSection" style="margin-top: 40px; display: none;">
+                    <div class="form-wrapper" style="margin-top: 0; max-width: 100%; margin-left: 0;">
+                        <label class="date-label" style="display: block; margin-bottom: 15px; font-size: 1.1rem;">If you have other crops in mind, enter them below</label>
+                        <!-- Dynamic Custom Inputs Container -->
+                        <div id="customInputsContainer" class="sensor-grid">
+                            <!-- Filled dynamically by script.js -->
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; align-items: center;">
+                        <button id="btnContinueCustom" class="btn-primary">Continue with your choice</button>
+                        <button id="btnGoSuggested" class="btn-primary">Go with suggested crops</button>
+                        <span id="cropSelectionError" style="color: #ff4b2b; font-size: 0.95rem; display: none; margin-left: 10px; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">Please select or enter at least one crop to continue</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Plan Module (Initially Hidden) -->
+            <div class="readings-section" id="cropResultsModule" style="display: none; opacity: 0; transition: opacity 0.4s ease; margin-top: 100px;">
+                <h3 class="section-heading" style="margin-bottom: 5px;">Action Plan for your Crops</h3>
+                <p class="subtitle" style="font-size: 1rem; color: rgba(255, 255, 255, 0.8); text-shadow: none;">Here is what you need to grow your selected crops successfully.</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 30px; align-items: flex-start;">
+                    
+                    <!-- LEFT COLUMN (50%) -->
+                    <div style="flex: 1 1 45%; min-width: 300px; display: flex; flex-direction: column; gap: 30px;">
+                        
+                        <!-- Raw Materials -->
+                        <div>
+                            <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;"><span style="color: #A3E635;">📦</span> Raw Materials</h4>
+                            <div id="rawMaterialsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Fertilizers -->
+                        <div>
+                            <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;"><span style="color: #A3E635;">🧪</span> Fertilizers</h4>
+                            <div id="fertilizersContainer" style="display: flex; flex-direction: column; gap: 15px;">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN (50%) -->
+                    <div style="flex: 1 1 45%; min-width: 300px;">
+                        <h4 style="color: #fff; font-size: 1.2rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;"><span style="color: #A3E635;">🛒</span> Available Sellers</h4>
+                        <div id="sellersContainer" style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <button id="btnBackToSelection" class="btn-export" style="padding: 12px 28px; border-radius: 50px;">← Back to selection</button>
+                    <button id="btnScrollToCrops" class="btn-primary" style="padding: 12px 30px; border-radius: 50px; font-weight: bold; transition: transform 0.3s ease; box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Move Forward →</button>
+                </div>
+            </div>
+            </div>
+            </div>
+        </section>
 
     <!-- Crops Section -->
     <section id="crops" class="crops-section section">
@@ -236,159 +421,172 @@
                 
                 <h2 class="section-heading text-center">Manage Your Crop</h2>
 
-            <!-- Crop Selection Area -->
-            <div class="form-wrapper">
-                <div class="form-card">
-                    
-                    <!-- Custom Dropdown -->
-                    <div class="custom-dropdown" id="cropDropdown">
-                        <div class="dropdown-selected" id="dropdownSelected">Select your crop</div>
-                        <div class="dropdown-list" id="dropdownList">
-                            <!-- Filled by JS -->
+                <!-- Selected Crops Tabs -->
+                <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;" id="cropsTabsContainer">
+                    <!-- Example default state, will be filled by JS -->
+                    <button class="filter-btn active" style="font-size: 1rem; padding: 10px 25px;">Rice</button>
+                    <button class="filter-btn" style="font-size: 1rem; padding: 10px 25px;">Wheat</button>
+                </div>
+
+                <div id="cropDataDashboard" style="display: flex; flex-direction: column; gap: 40px;">
+                    <!-- NPK & Fertilize Merged Section -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: stretch;">
+                        
+                        <!-- NPK Card -->
+                        <div class="npk-card glass-panel" style="background: rgba(0, 0, 0, 0.4); flex: 1 1 300px; padding: 25px;">
+                            <div class="card-header" style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                                <h3 style="color: #fff; font-size: 1.2rem; margin: 0;">N-P-K Breakdown</h3>
+                                <span class="confidence-badge" style="background: rgba(163, 230, 53, 0.2); color: #A3E635; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem;">HIGH — 51.25% confidence</span>
+                            </div>
+
+                            <div class="nutrient-list" style="display: flex; flex-direction: column; gap: 15px;">
+                                <div class="nutrient" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <span class="npk-label" style="color: #fff; width: 80px;">Nitrogen</span>
+                                    <div class="bar" style="flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 0 15px; overflow: hidden;">
+                                        <div class="fill nitrogen" style="width: 37.5%; height: 100%; background: #3b82f6;"></div>
+                                    </div>
+                                    <span class="value" style="color: #A3E635; width: 75px; text-align: right;" id="val-n">37.5 kg</span>
+                                </div>
+                                <div class="nutrient" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <span class="npk-label" style="color: #fff; width: 80px;">Phosphorus</span>
+                                    <div class="bar" style="flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 0 15px; overflow: hidden;">
+                                        <div class="fill phosphorus" style="width: 15.2%; height: 100%; background: #8b5cf6;"></div>
+                                    </div>
+                                    <span class="value" style="color: #A3E635; width: 75px; text-align: right;" id="val-p">15.2 kg</span>
+                                </div>
+                                <div class="nutrient" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <span class="npk-label" style="color: #fff; width: 80px;">Potassium</span>
+                                    <div class="bar" style="flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 0 15px; overflow: hidden;">
+                                        <div class="fill potassium" style="width: 25.0%; height: 100%; background: #f59e0b;"></div>
+                                    </div>
+                                    <span class="value" style="color: #A3E635; width: 75px; text-align: right;" id="val-k">25.0 kg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fertilizer CTA Block -->
+                        <div class="glass-panel" style="background: rgba(0, 0, 0, 0.4); flex: 1 1 300px; padding: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px; opacity: 0.8;">Total Fertilizer Required</h3>
+                            <div style="font-size: 2.5rem; font-weight: 700; color: #A3E635; text-shadow: 0 0 20px rgba(163,230,53,0.3); margin-bottom: 25px;" id="totalFertilizerText">77.7 kg/acre</div>
+                            
+                            <button id="startFertilizeBtn" class="btn-primary" style="padding: 15px 40px; font-size: 1.1rem; width: 100%; max-width: 250px;">Start Fertilizing</button>
                         </div>
                     </div>
 
-                    <!-- Date Selector -->
-                    <div class="date-field">
-                        <label class="date-label">Select sowing date</label>
-                        <div class="date-wrapper">
-                            <span class="date-icon">📅</span>
-                            <input type="date" id="sowingDate" class="date-input" required>
+                    <!-- Crop Journey Section -->
+                    <div id="cropJourneySection" class="crop-journey-section glass-panel" style="padding: 30px;">
+                        <h3 class="section-subheading" style="color: #A3E635; margin-bottom: 25px; font-size: 1.3rem;">Crop Journey</h3>
+                        
+                        <div class="journey-stages" style="display: flex; justify-content: space-between; position: relative; margin-bottom: 40px; text-align: center;">
+                            <!-- Connecting Line -->
+                            <div style="position: absolute; top: 25px; left: 10%; right: 10%; height: 4px; background: rgba(255,255,255,0.1); z-index: 1;">
+                                <div style="height: 100%; background: #A3E635; width: 25%;" id="journeyLineFill"></div>
+                            </div>
+
+                            <div class="stage" style="z-index: 2; flex: 1; margin-top: 40px;">
+                                <div class="stage-icon" style="width: 50px; height: 50px; background: #A3E635; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 4px solid #1a1a2e; box-shadow: 0 0 15px rgba(163,230,53,0.5);">🌱</div>
+                                <p style="color: #fff; margin-top: 10px; font-weight: bold;">Germination</p>
+                            </div>
+                            <div class="stage" style="z-index: 2; flex: 1; opacity: 0.5; margin-top: 40px;">
+                                <div class="stage-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 4px solid #1a1a2e;">🌿</div>
+                                <p style="color: #fff; margin-top: 10px;">Vegetative</p>
+                            </div>
+                            <div class="stage" style="z-index: 2; flex: 1; opacity: 0.5; margin-top: 40px;">
+                                <div class="stage-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 4px solid #1a1a2e;">🌼</div>
+                                <p style="color: #fff; margin-top: 10px;">Flowering</p>
+                            </div>
+                            <div class="stage" style="z-index: 2; flex: 1; opacity: 0.5; margin-top: 40px;">
+                                <div class="stage-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 4px solid #1a1a2e;">🍅</div>
+                                <p style="color: #fff; margin-top: 10px;">Fruiting</p>
+                            </div>
+                        </div>
+
+                        <div class="crop-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem; display: block; margin-bottom: 5px;">Crop Sown</span>
+                                <strong id="detailDate" style="color: #fff; font-size: 1.1rem;">-</strong>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem; display: block; margin-bottom: 5px;">Total Lifecycle</span>
+                                <strong id="detailDays" style="color: #fff; font-size: 1.1rem;">-</strong>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                                <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem; display: block; margin-bottom: 5px;">Days Completed</span>
+                                <strong style="color: #A3E635; font-size: 1.1rem;" id="detailProgress">0/0 days</strong>
+                            </div>
                         </div>
                     </div>
 
-                    <button id="startCropJourneyBtn" class="btn-gradient">Select Crop</button>
+                    <!-- Fertigation History Section -->
+                    <div id="fertigationHistorySection" class="fertigation-history-section">
+                        <h3 class="section-subheading" style="color: #A3E635; margin-bottom: 25px; font-size: 1.3rem;">Fertigation History</h3>
+                        
+                        <div class="history-list" id="historyList" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div class="glass-panel" style="padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="color: #fff; font-size: 1.1rem; display: block; margin-bottom: 4px;">Fertigation Completed</strong>
+                                    <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Today, 08:30 AM</span>
+                                </div>
+                                <span style="color: #A3E635; background: rgba(163,230,53,0.1); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Success</span>
+                            </div>
+                            <div class="glass-panel" style="padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; opacity: 0.7;">
+                                <div>
+                                    <strong style="color: #fff; font-size: 1.1rem; display: block; margin-bottom: 4px;">Fertigation Started</strong>
+                                    <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Yesterday, 07:15 AM</span>
+                                </div>
+                                <span style="color: #3b82f6; background: rgba(59,130,246,0.1); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Logged</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sell Your Crop Button -->
+                    <div style="display: flex; justify-content: center; margin-top: 30px;">
+                        <button id="btnSellYourCrop" class="btn-primary" style="padding: 12px 30px; font-weight: bold; border-radius: 50px; transition: transform 0.3s ease; box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Sell Your Crop</button>
+                    </div>
                 </div>
+                </div>
+
             </div>
-
-            <!-- Crop Journey Section (Hidden initially) -->
-            <div id="cropJourneySection" class="crop-journey-section hidden">
-                <h3 class="section-subheading">Crop Journey</h3>
-                
-                <div class="journey-stages">
-                    <div class="stage active" data-stage="1">
-                        <div class="stage-icon">🌱</div>
-                        <p>Germination</p>
-                    </div>
-                    <div class="stage-line"></div>
-                    <div class="stage" data-stage="2">
-                        <div class="stage-icon">🌿</div>
-                        <p>Vegetative</p>
-                    </div>
-                    <div class="stage-line"></div>
-                    <div class="stage" data-stage="3">
-                        <div class="stage-icon">🌼</div>
-                        <p>Flowering</p>
-                    </div>
-                    <div class="stage-line"></div>
-                    <div class="stage" data-stage="4">
-                        <div class="stage-icon">🍅</div>
-                        <p>Fruiting</p>
-                    </div>
-                </div>
-
-                <div class="progress-bar-container">
-                    <div class="progress-fill" id="cropProgressFill"></div>
-                    <span class="progress-text" id="cropProgressText">0%</span>
-                </div>
-
-                <div class="crop-details-card glass-panel">
-                    <div class="detail-row"><span>Crop:</span> <strong id="detailName">-</strong></div>
-                    <div class="detail-row"><span>Sown Date:</span> <strong id="detailDate">-</strong></div>
-                    <div class="detail-row"><span>Total Days:</span> <strong id="detailDays">-</strong></div>
-                    <div class="detail-row"><span>Current Stage:</span> <strong id="detailStage">-</strong></div>
-                    <div class="detail-row"><span>Stage Progress:</span> <strong id="detailStageProgress">-</strong></div>
-                </div>
-            </div>
-
-            <!-- Fertigation History Section (Hidden initially) -->
-            <div id="fertigationHistorySection" class="fertigation-history-section hidden">
-                <h3 class="section-subheading">Fertigation History</h3>
-                
-                <div class="history-list" id="historyList">
-                    <!-- Example items filled by JS -->
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- Fertilize Section -->
-    <section id="fertilize" class="section fertilize-section">
-        
+    <!-- Sell Section -->
+    <section id="sell" class="sensor-section section" style="display: none; padding-top: 150px;">
         <div class="content">
-            <div class="fertilize-hero fade-up">
-                <span class="ai-label">AI POWERED RECOMMENDATION</span>
-                
-                <!-- Interactive Plant -->
-                <div class="interactive-plant-container" id="fertPlantContainer">
-                    <div class="water-drops hidden" id="waterDrops">💧💧💧</div>
-                    <div class="the-plant" id="fertPlant">🪴</div>
-                </div>
-
-                <h2 class="gradient-text">Feed your crop right</h2>
-                <p class="subtitle">Precision N-P-K dosage calculated dynamically</p>
-                <button id="startFertilizeBtn" class="btn-action">Start Fertilizing</button>
-            </div>
-
-            <div class="fertilize-container">
-                <!-- NPK Card -->
-                <div class="npk-card glass-panel fade-up" style="transition-delay: 0.1s;">
-                    <div class="card-header">
-                        <h3>N-P-K Breakdown</h3>
-                        <span class="confidence-badge">HIGH — 51.25% confidence</span>
-                    </div>
-
-                    <div class="nutrient-list">
-                        <div class="nutrient">
-                            <span class="npk-label">Nitrogen</span>
-                            <div class="bar">
-                                <div class="fill nitrogen" data-value="37.5"></div>
-                            </div>
-                            <span class="value">37.5 kg/acre</span>
-                        </div>
-                        <div class="nutrient">
-                            <span class="npk-label">Phosphorus</span>
-                            <div class="bar">
-                                <div class="fill phosphorus" data-value="15"></div>
-                            </div>
-                            <span class="value">15 kg/acre</span>
-                        </div>
-                        <div class="nutrient">
-                            <span class="npk-label">Potassium</span>
-                            <div class="bar">
-                                <div class="fill potassium" data-value="22.5"></div>
-                            </div>
-                            <span class="value">22.5 kg/acre</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="side-panel fade-up" style="transition-delay: 0.2s;">
-                    <!-- Total Card -->
-                    <div class="total-card glass-panel">
-                        <h3>Total Fertilizer</h3>
-                        <div class="total-value">75 <span class="unit">kg/acre</span></div>
-                    </div>
-
-                    <p class="ai-insight">
-                        <i>"AI detected stressed conditions — increased dosage applied"</i>
-                    </p>
-
-                    <button class="btn-export">Export CSV</button>
+            <div class="sensor-content">
+                <div class="readings-section">
                     
-                    <div class="logs-container">
-                        <h4>Recent Logs</h4>
-                        <div class="log-item">
-                            <span class="log-icon">💧</span>
-                            <span class="log-text">Fertigation started</span>
-                        </div>
+                    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                        <button class="btn-primary" style="padding: 12px 30px; font-weight: bold; border-radius: 50px; font-size: 1.2rem; cursor: default; box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);">SELL YOUR CROPS</button>
                     </div>
+
+                    <div class="glass-panel" style="padding: 25px; margin-bottom: 30px; text-align: center; border-radius: 16px;">
+                        <h3 style="color: #fff; font-size: 1.3rem; margin: 0; letter-spacing: 1px;">SHOW YOUR AVAILABILITY FOR HARVESTED CROPS</h3>
+                    </div>
+
+                    <div id="industryRequestsContainer" style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- Filled dynamically by script.js -->
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Message Dialog Box (Modal) -->
+    <div id="messageDialogOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
+        <div class="glass-panel" style="width: 90%; max-width: 500px; padding: 30px; border-radius: 16px; position: relative;">
+            <h3 style="color: #A3E635; margin-bottom: 15px; font-size: 1.2rem;" id="dialogIndustryName">Message Industry</h3>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px; font-size: 0.95rem;">Please enter the quantity of harvest available. Your farm's statistical data will be automatically attached to this message.</p>
+            
+            <input type="number" id="cropAmountInput" placeholder="Type the amount of crop that you have grown (in kg)" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: #fff; margin-bottom: 25px; font-size: 1rem; outline: none; transition: border-color 0.3s ease;">
+            
+            <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                <button id="btnCancelMessage" style="padding: 10px 20px; border-radius: 50px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; cursor: pointer; transition: all 0.3s ease;">Cancel</button>
+                <button id="btnSendMessage" class="btn-primary" style="padding: 10px 25px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer;">Send</button>
+            </div>
+        </div>
+    </div>
     </div> <!-- End main-wrapper -->
 
     <script src="script.js"></script>
