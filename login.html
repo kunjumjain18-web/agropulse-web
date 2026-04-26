@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgroPulse</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .login-container {
+            background: rgba(10, 10, 20, 0.8);
+            border: 1px solid rgba(163, 230, 53, 0.4);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .login-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .login-title .hindi-text {
+            color: #A3E635;
+        }
+
+        .login-title .english-text {
+            color: #fff;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: 1px solid rgba(163, 230, 53, 0.4);
+            outline: none;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #A3E635;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #2ECC71, #A3E635);
+            color: #000;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(163, 230, 53, 0.6);
+        }
+
+        .error-message {
+            color: #ff4b2b;
+            margin-top: 15px;
+            font-size: 1rem;
+            display: none;
+        }
+        
+        /* Video Background */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Video for Consistency -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="Hero.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="login-container">
+        <div class="login-title">
+            <span class="hindi-text">एग्रो</span><span class="english-text">Pulse</span>
+        </div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="userId">User ID</label>
+                <input type="text" id="userId" placeholder="Enter User ID" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter Password" required>
+            </div>
+            
+            <div id="errorMsg" class="error-message">Invalid credentials</div>
+            
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userId = document.getElementById('userId').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (userId === 'agropulse_18' && password === 'agropulse123') {
+                localStorage.setItem("loggedInUser", "agropulse_18");
+                window.location.href = "marketplace.html";
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

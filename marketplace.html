@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPulse Industrial</title>
+    <meta name="description" content="AgroPulse Industrial - Source the best crops directly from trusted growers">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+        .section {
+            min-height: 100vh !important;
+            overflow-y: visible !important;
+            padding-bottom: 80px; 
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="hindi-text">एग्रो</span> <span class="english-text">Pulse</span> <span class="english-text" style="font-size: 1.2rem; background: none; -webkit-text-fill-color: #0B3D91; color: #0B3D91; margin-left: 5px;">Industrial</span>
+        </div>
+        <div class="nav-links" style="display: flex; align-items: center;">
+            <a href="index.html" class="nav-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Back to Main</span>
+            </a>
+            <a href="#" id="btnLogout" class="nav-link" style="display: none; margin-left: 20px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4b2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span style="color: #ff4b2b;">Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="display: block; opacity: 1; transition: opacity 0.5s ease; min-height: 100vh; height: auto; overflow: visible; padding-top: 120px; padding-bottom: 60px;">
+        <!-- Background Video -->
+        <div class="video-container">
+            <video autoplay muted loop playsinline class="background-video">
+                <source src="Hero.mp4" type="video/mp4">
+            </video>
+            <div class="overlay"></div>
+        </div>
+
+        <!-- Hero Content / Intro -->
+        <div id="introContent" class="hero-content" style="display: none; margin-top: 0; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: opacity 0.4s ease;">
+            <div class="title-and-line" style="background: none; padding: 0; margin: 0; align-items: center; width: 100%;">
+                <h1 class="main-heading" style="margin-top: 0; margin-bottom: 10px; justify-content: center; align-items: center; display: flex; flex-wrap: wrap;">
+                    <span class="hindi-text" style="font-size: 5rem;">एग्रो</span>
+                    <span class="english-text" style="font-size: 5rem; margin-left: 10px;">Pulse</span>
+                    <span class="english-text" style="font-size: 5rem; margin-left: 15px; background: none; -webkit-text-fill-color: #1e3a8a; color: #1e3a8a; text-shadow: none;">Industrial</span>
+                </h1>
+                <div class="decorative-line-wrapper" style="justify-content: center; width: 100%; max-width: 500px; margin-top: -15px;">
+                    <svg width="100%" height="45" viewBox="0 0 600 60" fill="none" preserveAspectRatio="none">
+                        <path d="M10 30 H250 L260 40 L270 15 L285 50 L300 5 L315 40 L325 30 H590" stroke="#A3E635" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+            
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.5rem; margin-top: 20px; font-weight: 500; text-shadow: 0 2px 10px rgba(0,0,0,0.5); max-width: 800px; padding: 0 20px; text-align: center;">
+                Start your buying journey here — source the best crops directly from trusted growers
+            </p>
+
+            <div style="margin-top: 40px; z-index: 10; display: flex; justify-content: center; width: 100%;">
+                <button id="btnStartFlow" class="btn-primary" style="padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; font-weight: bold; transition: transform 0.3s ease; box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Explore Marketplace</button>
+            </div>
+        </div>
+
+        <!-- Multi-Step Flow Container -->
+        <div id="flowContainer" style="display: block; position: relative; width: 100%; max-width: 800px; padding: 20px; z-index: 20; opacity: 1; transition: opacity 0.4s ease; margin: 0 auto;">
+            
+            <!-- Step 0: Login -->
+            <div id="loginStep" class="glass-panel" style="display: none; padding: 40px; border-radius: 16px; text-align: center;">
+                <h2 style="color: #fff; font-size: 2rem; margin-bottom: 30px;">Industrial Login</h2>
+                <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                    <div style="position: relative; width: 100%; max-width: 350px;">
+                        <input type="text" id="loginUserId" placeholder="User ID" autocomplete="off" style="width: 100%; padding: 15px; font-size: 1.2rem; border-radius: 10px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(163,230,53,0.4); outline: none;">
+                    </div>
+                    <div style="position: relative; width: 100%; max-width: 350px;">
+                        <input type="password" id="loginPassword" placeholder="Password" style="width: 100%; padding: 15px; font-size: 1.2rem; border-radius: 10px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(163,230,53,0.4); outline: none;">
+                    </div>
+                    <p id="loginError" style="color: #ff4b2b; margin-top: 10px; display: none;">Invalid User ID or Password</p>
+                    <button id="btnLoginSubmit" class="btn-primary" style="padding: 12px 40px; font-size: 1.2rem; border-radius: 50px; margin-top: 15px; width: 100%; max-width: 350px;">Login</button>
+                </div>
+            </div>
+
+            <!-- Step 1: Crop Selection -->
+            <div id="cropSection" class="glass-panel" style="display: block; padding: 40px; border-radius: 16px; text-align: center;">
+                <h2 style="color: #fff; font-size: 2rem; margin-bottom: 30px;">Which crop are you interested in buying?</h2>
+                <div style="position: relative; width: 100%; max-width: 400px; margin: 0 auto; text-align: left;">
+                    <select id="cropSelect" required style="width: 100%; padding: 15px 45px 15px 15px; font-size: 1.2rem; border-radius: 10px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(163,230,53,0.4); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; transition: border 0.3s ease;">
+                        <option value="" disabled selected>Select your crop</option>
+                        <option>Rice</option>
+                        <option>Wheat</option>
+                        <option>Maize</option>
+                        <option>Barley</option>
+                        <option>Millet</option>
+                        <option>Sorghum</option>
+                        <option>Tomato</option>
+                        <option>Potato</option>
+                        <option>Onion</option>
+                        <option>Garlic</option>
+                        <option>Carrot</option>
+                        <option>Cabbage</option>
+                        <option>Cauliflower</option>
+                        <option>Spinach</option>
+                        <option>Peas</option>
+                        <option>Brinjal</option>
+                        <option>Apple</option>
+                        <option>Banana</option>
+                        <option>Mango</option>
+                        <option>Orange</option>
+                        <option>Grapes</option>
+                        <option>Pineapple</option>
+                        <option>Papaya</option>
+                        <option>Guava</option>
+                        <option>Cotton</option>
+                        <option>Jute</option>
+                        <option>Sugarcane</option>
+                        <option>Tea</option>
+                        <option>Coffee</option>
+                        <option>Rubber</option>
+                        <option>Groundnut</option>
+                        <option>Soybean</option>
+                        <option>Mustard</option>
+                        <option>Sunflower</option>
+                        <option>Sesame</option>
+                        <option>Chickpea</option>
+                        <option>Lentil</option>
+                        <option>Pigeon Pea</option>
+                        <option>Black Gram</option>
+                        <option>Green Gram</option>
+                    </select>
+                    
+                    <!-- Dropdown Arrow -->
+                    <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(163,230,53,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <br><br>
+                <button type="button" onclick="goNext()" class="btn-primary" style="padding: 12px 40px; font-size: 1.2rem; border-radius: 50px; margin-top: 20px;">Next</button>
+            </div>
+
+            <!-- Step 2: Location Selection -->
+            <div id="step2" class="glass-panel" style="display: none; padding: 40px; border-radius: 16px; text-align: center;">
+                <h2 style="color: #fff; font-size: 2rem; margin-bottom: 10px;">Specify your preferred procurement regions</h2>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; margin-bottom: 30px;">You may select a minimum of 1 and a maximum of 3 states.</p>
+                <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                    <div style="position: relative; width: 100%; max-width: 400px; text-align: left;">
+                        <select id="stateSelect1" onchange="validateStates()" style="width: 100%; padding: 15px 45px 15px 15px; font-size: 1.2rem; border-radius: 10px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(163,230,53,0.4); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; transition: border 0.3s ease;">
+                            <option value="" disabled selected>Select State 1</option>
+                            <option>Andaman and Nicobar Islands</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chandigarh</option><option>Chhattisgarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jammu and Kashmir</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Ladakh</option><option>Lakshadweep</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Puducherry</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+                        </select>
+                        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(163,230,53,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
+                    
+                    <div style="position: relative; width: 100%; max-width: 400px; text-align: left;">
+                        <select id="stateSelect2" onchange="validateStates()" style="width: 100%; padding: 15px 45px 15px 15px; font-size: 1.2rem; border-radius: 10px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(163,230,53,0.4); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; transition: border 0.3s ease;">
+                            <option value="" disabled selected>Select State 2 (Optional)</option>
+                            <option>Andaman and Nicobar Islands</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chandigarh</option><option>Chhattisgarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jammu and Kashmir</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Ladakh</option><option>Lakshadweep</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Puducherry</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+                        </select>
+                        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(163,230,53,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
+                    
+                    <div style="position: relative; width: 100%; max-width: 400px; text-align: left;">
+                        <select id="stateSelect3" onchange="validateStates()" style="width: 100%; padding: 15px 45px 15px 15px; font-size: 1.2rem; border-radius: 10px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(163,230,53,0.4); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; transition: border 0.3s ease;">
+                            <option value="" disabled selected>Select State 3 (Optional)</option>
+                            <option>Andaman and Nicobar Islands</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chandigarh</option><option>Chhattisgarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jammu and Kashmir</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Ladakh</option><option>Lakshadweep</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Puducherry</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+                        </select>
+                        <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(163,230,53,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; gap: 20px; margin-top: 25px;">
+                    <button id="btnBack2" type="button" class="btn-primary" style="padding: 12px 40px; font-size: 1.2rem; border-radius: 50px; background: rgba(255,255,255,0.1); border: 1px solid #fff; color: #fff; box-shadow: none;">Back</button>
+                    <button id="btnNext2" type="button" class="btn-primary" style="padding: 12px 40px; font-size: 1.2rem; border-radius: 50px; opacity: 0.5; pointer-events: none;">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Farmers Discovery -->
+            <div id="step3" class="glass-panel" style="display: none; padding: 30px; border-radius: 16px; width: 100%;">
+                <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 20px; text-align: center;">Discover Farmers</h2>
+                
+                <!-- State Tabs -->
+                <div id="stateTabs" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                    <!-- Filled by JS -->
+                </div>
+
+                <!-- Farmer Cards Grid -->
+                <div id="farmersGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; max-height: 450px; overflow-y: auto; padding-right: 10px; margin-bottom: 20px;">
+                    <!-- Farmer Cards injected via JS -->
+                </div>
+                
+                <!-- Accepted Requests Section -->
+                <div id="acceptedRequestsSection" style="margin-top: 40px; display: none;">
+                    <h3 style="color: #A3E635; font-size: 1.5rem; margin-bottom: 15px; border-bottom: 1px solid rgba(163,230,53,0.3); padding-bottom: 10px; text-align: left;">Approved Farmers</h3>
+                    <div id="acceptedFarmersList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                        <!-- Cards injected via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Success -->
+            <div id="step4" class="glass-panel" style="display: none; padding: 40px; border-radius: 16px; text-align: center;">
+                <div style="font-size: 4rem; color: #A3E635; margin-bottom: 10px;">✔</div>
+                <h2 style="color: #A3E635; font-size: 2rem; margin-bottom: 15px;">Request Sent Successfully!</h2>
+                <p style="color: #fff; font-size: 1.2rem;">Your request has been securely forwarded to the trusted farmers in your selected regions.</p>
+                <button onclick="location.reload()" class="btn-export" style="margin-top: 30px; padding: 10px 30px; border-radius: 50px;">Start New Search</button>
+            </div>
+            
+            <!-- Statistical Report Modal -->
+            <div id="statsModal" onclick="if(event.target === this) closeStatsModal()" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+                <div class="glass-panel" style="width: 90%; max-width: 500px; padding: 30px; border-radius: 16px; position: relative; border: 1px solid rgba(163,230,53,0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+                    <button type="button" onclick="closeStatsModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; line-height: 1; z-index: 10;">&times;</button>
+                    <h3 id="statsModalTitle" style="color: #A3E635; font-size: 1.5rem; margin-top: 0; margin-bottom: 20px; text-align: center;">Statistical Report</h3>
+                    <div id="statsModalContent" style="color: #fff; text-align: left; font-size: 1.1rem; line-height: 1.6;">
+                        <!-- Content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .selected-state {
+            background: rgba(163,230,53,0.3) !important;
+            border-color: #A3E635 !important;
+        }
+        .marker-wrapper {
+            position: absolute;
+            z-index: 10;
+        }
+        .pin {
+            width: 24px;
+            height: 24px;
+            background: #ff4b2b;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255,75,43,0.6);
+            border: 2px solid #fff;
+            transition: transform 0.2s ease;
+        }
+        .marker-wrapper:hover .pin {
+            transform: rotate(-45deg) scale(1.2);
+            background: #A3E635;
+            box-shadow: 0 0 15px rgba(163,230,53,0.8);
+        }
+        .farmer-card {
+            display: none; /* Handled by Leaflet now */
+        }
+        
+        /* Leaflet Overrides to match UI */
+        .leaflet-popup-content-wrapper {
+            background: rgba(10, 10, 20, 0.95) !important;
+            border: 1px solid rgba(163,230,53,0.5) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8) !important;
+            backdrop-filter: blur(5px) !important;
+            color: #fff !important;
+            text-align: center;
+        }
+        .leaflet-popup-tip {
+            background: rgba(163,230,53,0.5) !important;
+        }
+        .leaflet-popup-content {
+            margin: 15px !important;
+            min-width: 180px;
+        }
+        .custom-leaflet-marker {
+            background: transparent;
+            border: none;
+        }
+        .custom-leaflet-marker:hover .pin {
+            transform: rotate(-45deg) scale(1.2);
+            background: #A3E635;
+            box-shadow: 0 0 15px rgba(163,230,53,0.8);
+        }
+
+        /* Custom Dropdown Suggestions */
+        .suggestion-item {
+            padding: 12px 15px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1.1rem;
+            text-align: left;
+        }
+        .suggestion-item:hover, .suggestion-item.active {
+            background: rgba(163,230,53,0.2);
+        }
+        .suggestion-category {
+            padding: 8px 15px;
+            color: #A3E635;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: rgba(255,255,255,0.05);
+            text-transform: uppercase;
+            text-align: left;
+        }
+        #cropSuggestions::-webkit-scrollbar {
+            width: 8px;
+        }
+        #cropSuggestions::-webkit-scrollbar-thumb {
+            background: rgba(163,230,53,0.4);
+            border-radius: 4px;
+        }
+    </style>
+
+    <script>
+        // Authentication Protection
+        if (!localStorage.getItem('loggedInUser')) {
+            window.location.href = "login.html";
+        }
+        
+        // Show Logout button
+        document.getElementById('btnLogout').style.display = 'flex';
+
+        const btnStartFlow = document.getElementById('btnStartFlow');
+        const introContent = document.getElementById('introContent');
+        const flowContainer = document.getElementById('flowContainer');
+        const cropSelectInput = document.getElementById('cropSelectInput');
+        const cropSuggestions = document.getElementById('cropSuggestions');
+        const btnNext1 = document.getElementById('btnNext1');
+        const btnNext2 = document.getElementById('btnNext2');
+        const btnBack2 = document.getElementById('btnBack2');
+        
+        let selectedCrop = sessionStorage.getItem('selectedCrop') || "";
+        let selectedStates = JSON.parse(sessionStorage.getItem('selectedStates_cache') || '[]');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentPage = localStorage.getItem('currentPage');
+            
+            // Restore user selections
+            if (selectedCrop) {
+                const cropSelect = document.getElementById("cropSelect");
+                if (cropSelect) cropSelect.value = selectedCrop;
+            }
+            if (selectedStates && selectedStates.length > 0) {
+                if (selectedStates[0]) document.getElementById('stateSelect1').value = selectedStates[0];
+                if (selectedStates[1]) document.getElementById('stateSelect2').value = selectedStates[1];
+                if (selectedStates[2]) document.getElementById('stateSelect3').value = selectedStates[2];
+                if (typeof validateStates === 'function') validateStates();
+            }
+
+            if (currentPage === 'marketplace' && selectedCrop && selectedStates.length > 0) {
+                document.getElementById('cropSection').style.display = 'none';
+                document.getElementById('step2').style.display = 'none';
+                document.getElementById('step3').style.display = 'block';
+                
+                const storedFarmers = sessionStorage.getItem('availableFarmers_cache');
+                if (storedFarmers) {
+                    availableFarmers = JSON.parse(storedFarmers);
+                    initializeFarmersList();
+                }
+            } else if (currentPage === 'state' && selectedCrop) {
+                document.getElementById('cropSection').style.display = 'none';
+                document.getElementById('step3').style.display = 'none';
+                document.getElementById('step2').style.display = 'block';
+            } else {
+                document.getElementById('step2').style.display = 'none';
+                document.getElementById('step3').style.display = 'none';
+                document.getElementById('cropSection').style.display = 'block';
+                localStorage.setItem('currentPage', 'crop');
+            }
+        });
+
+        // UI state transitions
+        function switchStep(fromId, toId) {
+            const fromEl = document.getElementById(fromId);
+            const toEl = document.getElementById(toId);
+            fromEl.style.opacity = '0';
+            setTimeout(() => {
+                fromEl.style.display = 'none';
+                toEl.style.display = 'block';
+                setTimeout(() => {
+                    toEl.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        btnStartFlow.addEventListener('click', () => {
+            window.location.href = "login.html";
+        });
+
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                window.location.href = "login.html";
+            });
+        }
+
+
+
+        function goNext() {
+            const crop = document.getElementById("cropSelect").value;
+
+            if (!crop) {
+                alert("Please select a crop");
+                return;
+            }
+
+            selectedCrop = crop;
+            sessionStorage.setItem('selectedCrop', selectedCrop);
+            localStorage.setItem('currentPage', 'state');
+            
+            // Use existing transition flow
+            switchStep("cropSection", "step2");
+        }
+
+        btnBack2.addEventListener('click', () => {
+            localStorage.setItem('currentPage', 'crop');
+            switchStep('step2', 'cropSection');
+        });
+
+        function validateStates() {
+            const s1 = document.getElementById('stateSelect1').value;
+            const s2 = document.getElementById('stateSelect2').value;
+            const s3 = document.getElementById('stateSelect3').value;
+            const btnNext2 = document.getElementById('btnNext2');
+            
+            if (s1 || s2 || s3) {
+                btnNext2.style.opacity = "1";
+                btnNext2.style.pointerEvents = "auto";
+            } else {
+                btnNext2.style.opacity = "0.5";
+                btnNext2.style.pointerEvents = "none";
+            }
+        }
+
+        btnNext2.addEventListener('click', () => {
+            const s1 = document.getElementById('stateSelect1').value;
+            const s2 = document.getElementById('stateSelect2').value;
+            const s3 = document.getElementById('stateSelect3').value;
+            
+            let selected = [s1, s2, s3].filter(Boolean);
+            // remove duplicates if user selected the same state multiple times
+            selected = [...new Set(selected)];
+            
+            if (selected.length < 1) {
+                return;
+            }
+            
+            selectedStates = selected;
+            switchStep('step2', 'step3');
+            initializeFarmersList();
+            localStorage.setItem('currentPage', 'marketplace');
+        });
+
+        // Farmers List Logic (Replaced Map)
+        let availableFarmers = [];
+
+        function initializeFarmersList() {
+            const stateTabs = document.getElementById('stateTabs');
+            stateTabs.innerHTML = '';
+            
+            // Check if we already have a generated list for this session's selected states
+            const storedFarmers = sessionStorage.getItem('availableFarmers_cache');
+            const storedStates = sessionStorage.getItem('selectedStates_cache');
+            
+            if (storedFarmers && storedStates === JSON.stringify(selectedStates)) {
+                availableFarmers = JSON.parse(storedFarmers);
+            } else {
+                // Generate Mock Farmers for all selected states
+                availableFarmers = [];
+                selectedStates.forEach(state => {
+                    const numFarmers = Math.floor(Math.random() * 4) + 4; // 4 to 7 farmers per state
+                    for(let i=0; i<numFarmers; i++) {
+                        availableFarmers.push({
+                            id: "farmer_" + state.substring(0,3).toLowerCase() + "_" + Date.now().toString() + "_" + i,
+                            name: "Farmer " + String.fromCharCode(65 + Math.floor(Math.random() * 26)) + ". " + state.substring(0,3),
+                            location: state,
+                            city: ["District 1", "District 2", "Main Village", "Agri Hub"][Math.floor(Math.random() * 4)],
+                            phone: "+91 9" + Math.floor(100000000 + Math.random() * 900000000),
+                            crop: selectedCrop,
+                            yield: (Math.floor(Math.random() * 5) + 2) + " kg/Acre",
+                            quality: ["Premium", "Grade A", "Standard"][Math.floor(Math.random() * 3)]
+                        });
+                    }
+                });
+                sessionStorage.setItem('availableFarmers_cache', JSON.stringify(availableFarmers));
+                sessionStorage.setItem('selectedStates_cache', JSON.stringify(selectedStates));
+            }
+
+            // Create "All" tab if multiple states
+            if (selectedStates.length > 1) {
+                const allBtn = document.createElement('button');
+                allBtn.className = "btn-primary";
+                allBtn.style.cssText = "padding: 8px 20px; border-radius: 50px; font-size: 1rem; border: 2px solid #A3E635; cursor: pointer; transition: all 0.3s; background: linear-gradient(135deg, #2ECC71, #A3E635);";
+                allBtn.innerText = "All Selected States";
+                allBtn.onclick = () => filterFarmers('All', allBtn);
+                stateTabs.appendChild(allBtn);
+            }
+
+            // Create individual state tabs
+            selectedStates.forEach((state, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-primary";
+                // If 1 state, it's active. If multiple, 'All' is active initially.
+                const isActive = selectedStates.length === 1 ? true : false;
+                
+                btn.style.cssText = isActive
+                    ? "padding: 8px 20px; border-radius: 50px; font-size: 1rem; border: 2px solid #A3E635; cursor: pointer; transition: all 0.3s; background: linear-gradient(135deg, #2ECC71, #A3E635);"
+                    : "padding: 8px 20px; border-radius: 50px; font-size: 1rem; background: rgba(255,255,255,0.1); color: #fff; border: 2px solid transparent; cursor: pointer; transition: all 0.3s;";
+                
+                btn.innerText = state;
+                btn.onclick = () => filterFarmers(state, btn);
+                stateTabs.appendChild(btn);
+            });
+
+            // Trigger initial filter
+            if (selectedStates.length > 1) {
+                filterFarmers('All', stateTabs.firstChild);
+            } else if (selectedStates.length === 1) {
+                filterFarmers(selectedStates[0], stateTabs.firstChild);
+            }
+        }
+
+        function filterFarmers(stateFilter, activeBtn) {
+            // Update tabs UI
+            const tabs = document.getElementById('stateTabs').children;
+            for(let i=0; i<tabs.length; i++) {
+                tabs[i].style.background = 'rgba(255,255,255,0.1)';
+                tabs[i].style.border = '2px solid transparent';
+            }
+            if (activeBtn) {
+                activeBtn.style.background = 'linear-gradient(135deg, #2ECC71, #A3E635)';
+                activeBtn.style.border = '2px solid #A3E635';
+            }
+
+            // Filter data
+            const filtered = stateFilter === 'All' ? availableFarmers : availableFarmers.filter(f => f.location === stateFilter);
+            
+            // Render grid
+            const grid = document.getElementById('farmersGrid');
+            grid.innerHTML = '';
+            
+            const currentUser = localStorage.getItem('loggedInUser') || "Industrial Buyer";
+            const existingRequests = JSON.parse(localStorage.getItem('buyerRequests') || '[]');
+            
+            filtered.forEach(f => {
+                const isRequested = existingRequests.some(r => r.id === f.id && r.buyerName === currentUser);
+                
+                const card = document.createElement('div');
+                card.style.cssText = "background: rgba(10, 10, 20, 0.8); border: 1px solid rgba(163,230,53,0.3); border-radius: 12px; padding: 15px; text-align: left; transition: transform 0.2s, box-shadow 0.2s; backdrop-filter: blur(5px); pointer-events: auto;";
+                card.onmouseover = () => { card.style.transform = 'translateY(-3px)'; card.style.boxShadow = '0 5px 15px rgba(163,230,53,0.2)'; };
+                card.onmouseout = () => { card.style.transform = 'translateY(0)'; card.style.boxShadow = 'none'; };
+                
+                let buttonHTML = '';
+                if (isRequested) {
+                    buttonHTML = `<button class="btn-primary" style="padding: 6px 15px; font-size: 0.9rem; border-radius: 50px; background: rgba(255,255,255,0.2); color: #ccc; pointer-events: none;" disabled>Request Sent</button>`;
+                } else {
+                    buttonHTML = `<button onclick="sendRequest('${f.id}', '${f.name}', '${f.location}', '${f.crop}', '${f.phone}', this)" class="btn-primary" style="padding: 6px 15px; font-size: 0.9rem; border-radius: 50px; pointer-events: auto;">Send Request</button>`;
+                }
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                        <div>
+                            <h4 style="color: #A3E635; margin: 0 0 2px 0; font-size: 1.2rem;">${f.name}</h4>
+                            <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin: 0;">📍 ${f.city}, ${f.location}</p>
+                        </div>
+                        <span style="background: rgba(163,230,53,0.2); border: 1px solid rgba(163,230,53,0.4); padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; color: #A3E635;">${f.quality}</span>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem;">
+                        <p style="margin: 0 0 5px 0; color: #fff;"><strong>Crop:</strong> ${f.crop}</p>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p style="margin: 0;">
+                            <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem; font-style: italic;">🔒 Available after approval</span>
+                        </p>
+                        ${buttonHTML}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Send Request & Accepted Farmers Logic
+        window.sendRequest = function(farmerId, farmerName, location, crop, phone, btnElement) {
+            const currentUser = localStorage.getItem('loggedInUser') || "Industrial Buyer";
+            
+            const existingRequests = JSON.parse(localStorage.getItem('buyerRequests') || '[]');
+            
+            // Prevent duplicate requests
+            if (existingRequests.some(r => r.id === farmerId && r.buyerName === currentUser)) {
+                return;
+            }
+
+            const requestPayload = {
+                id: farmerId,
+                buyerName: currentUser,
+                buyer: currentUser,
+                crop: crop,
+                location: location,
+                farmerName: farmerName,
+                phone: phone,
+                status: "pending",
+                timestamp: new Date().toISOString()
+            };
+
+            existingRequests.push(requestPayload);
+            localStorage.setItem('buyerRequests', JSON.stringify(existingRequests));
+
+            if (btnElement) {
+                btnElement.innerText = "Request Sent";
+                btnElement.style.background = "rgba(255,255,255,0.2)";
+                btnElement.style.color = "#ccc";
+                btnElement.style.pointerEvents = "none";
+                btnElement.disabled = true;
+            }
+            
+            alert(`Request sent successfully. Waiting for farmer approval.`);
+            renderAcceptedFarmers();
+        }
+
+        function renderAcceptedFarmers() {
+            const section = document.getElementById('acceptedRequestsSection');
+            const list = document.getElementById('acceptedFarmersList');
+            
+            // Get requests from localStorage
+            const allRequests = JSON.parse(localStorage.getItem('buyerRequests') || '[]');
+            const approvedRequests = allRequests.filter(r => r.status === 'approved' && r.crop === selectedCrop && selectedStates.includes(r.location));
+            
+            section.style.display = 'block';
+            list.innerHTML = '';
+            
+            if (approvedRequests.length === 0) {
+                list.innerHTML = `<div style="padding: 20px; color: rgba(255,255,255,0.5); font-style: italic; text-align: center; grid-column: 1 / -1;">No approved farmers yet. Waiting for farmers to accept your requests...</div>`;
+                return;
+            }
+
+            approvedRequests.forEach((farmer) => {
+                const card = document.createElement('div');
+                card.style.cssText = "background: rgba(10, 10, 20, 0.8); border: 1px solid rgba(163,230,53,0.3); border-radius: 12px; padding: 15px; text-align: left; transition: transform 0.2s; backdrop-filter: blur(5px);";
+                card.onmouseover = () => card.style.transform = 'translateY(-3px)';
+                card.onmouseout = () => card.style.transform = 'translateY(0)';
+                
+                // Use exact quantity sent by seller, format to kg
+                const quantity = farmer.quantity ? String(farmer.quantity).replace(/Tons/gi, 'kg') : "0 kg";
+                const phoneStr = farmer.phone ? farmer.phone : "+91 9876543210";
+                
+                card.innerHTML = `
+                    <h4 style="color: #A3E635; margin: 0 0 5px 0; font-size: 1.2rem;">${farmer.farmerName}</h4>
+                    <p style="color: rgba(255,255,255,0.8); margin: 0 0 5px 0; font-size: 0.9rem;">📍 ${farmer.location}</p>
+                    <p style="margin: 0 0 10px 0;">
+                        <a href="tel:${phoneStr.replace(/\\s+/g, '')}" style="color: #4facfe; text-decoration: none; font-size: 0.9rem; transition: color 0.2s;">📞 ${phoneStr}</a>
+                    </p>
+                    <div style="background: rgba(0,0,0,0.4); padding: 8px; border-radius: 6px; margin-bottom: 15px;">
+                        <p style="color: #fff; margin: 0 0 3px 0; font-size: 0.9rem;"><strong>Crop:</strong> ${farmer.crop}</p>
+                        <p style="color: #fff; margin: 0; font-size: 0.9rem;"><strong>Available:</strong> ${quantity}</p>
+                    </div>
+                    <button onclick='openStatsModal(${JSON.stringify(farmer).replace(/'/g, "&#39;")})' class="btn-primary" style="padding: 8px 12px; font-size: 0.85rem; width: 100%; border-radius: 50px; background: rgba(163,230,53,0.1); border: 1px solid #A3E635; color: #fff;">👉 View Statistical Report</button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        window.openStatsModal = function(farmer) {
+            document.getElementById('statsModalTitle').innerText = (farmer.farmerName || farmer.name || "Farmer") + " - Field Statistics";
+            const qty = farmer.quantity ? String(farmer.quantity).replace(/Tons/gi, 'kg') : "0 kg";
+            document.getElementById('statsModalContent').innerHTML = `
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Crop & Quantity</span>
+                    <strong style="color: #fff;">${farmer.crop} (${qty})</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Contact Number</span>
+                    <strong style="color: #fff;">📞 ${farmer.phone || 'N/A'}</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Nitrogen (N)</span>
+                    <strong style="color: #A3E635;">120 kg/ha</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Phosphorus (P)</span>
+                    <strong style="color: #A3E635;">60 kg/ha</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Potassium (K)</span>
+                    <strong style="color: #A3E635;">40 kg/ha</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Soil Quality</span>
+                    <strong style="color: #A3E635;">Good</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Moisture Level</span>
+                    <strong style="color: #A3E635;">Medium</strong>
+                </div>
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                    <span style="color: rgba(255,255,255,0.6);">Yield Quality</span>
+                    <strong style="color: #A3E635;">High</strong>
+                </div>
+                <div style="margin-top: 20px; background: rgba(163,230,53,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #A3E635;">
+                    <span style="color: rgba(255,255,255,0.6); display: block; margin-bottom: 5px; font-size: 0.9rem;">AI Insight</span>
+                    <span style="color: #fff;">Optimal conditions detected for this yield. Current nutrient and moisture levels strongly support robust crop development.</span>
+                </div>
+            `;
+            document.getElementById('statsModal').style.display = 'flex';
+        }
+
+        window.closeStatsModal = function() {
+            document.getElementById('statsModal').style.display = 'none';
+        }
+
+        // Close modal on ESC key
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('statsModal');
+                if (modal && modal.style.display === 'flex') {
+                    closeStatsModal();
+                }
+            }
+        });
+
+        // Periodically poll localStorage to instantly show farmers if approved on another device/tab
+        setInterval(() => {
+            if (document.getElementById('step3').style.display === 'block') {
+                renderAcceptedFarmers();
+            }
+        }, 2000);
+    </script>
+</body>
+
+</html>

@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         insights: false,
         recommended: false,
         crops: false,
-        sell: false
+        sell: false,
+        "become-seller": true
     };
 
     window.unlockSection = function(id) {
@@ -23,7 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateNavLocks() {
         navLinks.forEach(l => {
-            const id = l.getAttribute('href').substring(1);
+            const href = l.getAttribute('href');
+            if (!href.startsWith('#')) {
+                l.style.pointerEvents = 'auto';
+                l.style.opacity = '1';
+                l.style.cursor = 'pointer';
+                return;
+            }
+            const id = href.substring(1);
             if (!window.unlockedSections[id]) {
                 l.style.pointerEvents = 'none';
                 l.style.opacity = '0.4';
@@ -76,8 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href.startsWith('#')) return; // Allow external links to work naturally
+            
             e.preventDefault(); 
-            const targetId = this.getAttribute('href').substring(1);
+            const targetId = href.substring(1);
             window.switchTab(targetId);
         });
     });
@@ -1152,8 +1163,28 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Fresh Harvest Distributors", location: "Nashik", crops: ["Onion", "Tomato", "Potato"], status: "pending" }
     ];
 
+    // Sync from localStorage
+    function syncLocalStorageRequests() {
+        const storedBuyerRequests = JSON.parse(localStorage.getItem('buyerRequests') || '[]');
+        // We avoid duplicating existing stored requests by tracking them
+        storedBuyerRequests.forEach(req => {
+            const exists = industriesData.find(ind => ind.id === req.id);
+            if (!exists) {
+                industriesData.unshift({
+                    id: req.id,
+                    name: req.buyerName + " (Direct)",
+                    location: req.location,
+                    crops: [req.crop],
+                    status: "pending",
+                    timestamp: req.timestamp
+                });
+            }
+        });
+    }
+
     function renderIndustryRequests() {
         if (!industryRequestsContainer) return;
+        syncLocalStorageRequests();
         industryRequestsContainer.innerHTML = '';
         
         industriesData.forEach((ind, index) => {
@@ -1222,6 +1253,19 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSendMessage.addEventListener('click', () => {
             if (!cropAmountInput.value.trim()) return;
             industriesData[currentIndustryRow].status = 'responded';
+            
+            // Update localStorage to trigger "approved" status in Industrial portal
+            const targetId = industriesData[currentIndustryRow].id;
+            if (targetId) {
+                const storedBuyerRequests = JSON.parse(localStorage.getItem('buyerRequests') || '[]');
+                const idx = storedBuyerRequests.findIndex(r => r.id === targetId);
+                if (idx !== -1) {
+                    storedBuyerRequests[idx].status = 'approved';
+                    storedBuyerRequests[idx].quantity = cropAmountInput.value.trim();
+                    localStorage.setItem('buyerRequests', JSON.stringify(storedBuyerRequests));
+                }
+            }
+
             messageDialogOverlay.style.opacity = '0';
             setTimeout(() => { 
                 messageDialogOverlay.style.display = 'none'; 
@@ -1236,6 +1280,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Listen for storage events (e.g. from the buyer flow in new tab)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'buyerRequests') {
+            renderIndustryRequests();
+        }
+    });
+
     renderIndustryRequests();
 
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const hero = document.querySelector(".hero-section");
+  if (hero) hero.style.display = "block";
 });

@@ -1517,3 +1517,28 @@ canvas#sensorCanvas {
 .water-overlay.active {
     height: 40%;
 }
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-list {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #1e1e1e;
+    border-radius: 10px;
+    margin-top: 5px;
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.dropdown-item:hover {
+    background: rgba(0,255,100,0.2);
+}
