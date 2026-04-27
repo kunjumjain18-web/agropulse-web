@@ -498,8 +498,7 @@
                             city: ["District 1", "District 2", "Main Village", "Agri Hub"][Math.floor(Math.random() * 4)],
                             phone: "+91 9" + Math.floor(100000000 + Math.random() * 900000000),
                             crop: selectedCrop,
-                            yield: (Math.floor(Math.random() * 5) + 2) + " kg/Acre",
-                            quality: ["Premium", "Grade A", "Standard"][Math.floor(Math.random() * 3)]
+                            yield: (Math.floor(Math.random() * 5) + 2) + " kg/Acre"
                         });
                     }
                 });
@@ -584,7 +583,6 @@
                             <h4 style="color: #A3E635; margin: 0 0 2px 0; font-size: 1.2rem;">${f.name}</h4>
                             <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin: 0;">📍 ${f.city}, ${f.location}</p>
                         </div>
-                        <span style="background: rgba(163,230,53,0.2); border: 1px solid rgba(163,230,53,0.4); padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; color: #A3E635;">${f.quality}</span>
                     </div>
                     
                     <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem;">
